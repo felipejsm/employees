@@ -8,11 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 @RestController
@@ -32,9 +34,25 @@ public class EmployeesApplication {
 		SpringApplication.run(EmployeesApplication.class, args);
 	}
 
-	@GetMapping
-	public List<Titles> get() {
-		return this.titlesRepository.findBy(PageRequest.of(1, 10));
+	@GetMapping("page")
+	public Page<Titles> get() {
+		long startTime = System.nanoTime();
+		var response = this.titlesRepository.findAll(PageRequest.of(1, 2));
+		long endTime = System.nanoTime();
+		long duration = TimeUnit.MILLISECONDS.convert( (endTime - startTime), TimeUnit.NANOSECONDS);
+		System.out.println("Page time: "+duration);
+		return response;
 	}
+
+	@GetMapping("list")
+	public List<Titles> getList() {
+		long startTime = System.nanoTime();
+		var response = this.titlesRepository.findBy(PageRequest.of(1, 2));
+		long endTime = System.nanoTime();
+		long duration = TimeUnit.MILLISECONDS.convert( (endTime - startTime), TimeUnit.NANOSECONDS);
+		System.out.println("List time: "+duration);
+		return response;
+	}
+
 
 }

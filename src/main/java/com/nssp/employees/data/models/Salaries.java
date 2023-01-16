@@ -13,20 +13,16 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@IdClass(SalariesId.class)
 public class Salaries implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private Long salary;
 
-    @NaturalId
-    @ManyToOne
-    @JoinColumn(
-            name = "emp_no",
-            referencedColumnName = "emp_no")
-    private Employees employees;
+    @Id
+    @Column(name = "emp_no")
+    private Long empNo;
 
+    @Id
     @Column(name = "from_date")
     private LocalDate fromDate;
 

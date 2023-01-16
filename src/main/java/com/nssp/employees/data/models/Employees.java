@@ -31,14 +31,12 @@ public class Employees implements Serializable {
     private LocalDate hireDate;
 
     @OneToMany(
-            mappedBy = "employees",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Titles> titles = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "employees",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
