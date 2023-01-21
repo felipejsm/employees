@@ -37,9 +37,9 @@ public class EmployeesApplication {
 	@GetMapping("page")
 	public Page<Titles> get() {
 		long startTime = System.nanoTime();
-		var response = this.titlesRepository.findAll(PageRequest.of(1, 2));
+		var response = this.titlesRepository.findAll(PageRequest.of(1, 10000));
 		long endTime = System.nanoTime();
-		long duration = TimeUnit.MILLISECONDS.convert( (endTime - startTime), TimeUnit.NANOSECONDS);
+		long duration = TimeUnit.SECONDS.convert( (endTime - startTime), TimeUnit.NANOSECONDS);
 		System.out.println("Page time: "+duration);
 		return response;
 	}
@@ -47,9 +47,9 @@ public class EmployeesApplication {
 	@GetMapping("list")
 	public List<Titles> getList() {
 		long startTime = System.nanoTime();
-		var response = this.titlesRepository.findBy(PageRequest.of(1, 2));
+		var response = this.titlesRepository.findBy(PageRequest.of(1, 10000));
 		long endTime = System.nanoTime();
-		long duration = TimeUnit.MILLISECONDS.convert( (endTime - startTime), TimeUnit.NANOSECONDS);
+		long duration = TimeUnit.SECONDS.convert( (endTime - startTime), TimeUnit.NANOSECONDS);
 		System.out.println("List time: "+duration);
 		return response;
 	}
